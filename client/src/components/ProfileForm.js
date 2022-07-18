@@ -5,7 +5,6 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
 function ProfileForm() {
-
     const [selectedFile, setSelectedFile] = useState()
     const [selectedFileName, setSelectedFileName] = useState()
     const [selectedPlayerName, setSelectedPlayerName] = useState()
@@ -26,7 +25,6 @@ function ProfileForm() {
         event.preventDefault()
         console.log(selectedFileName)
         console.log(selectedPlayerName)
-        
     }
     
     return (

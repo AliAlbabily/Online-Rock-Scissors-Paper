@@ -3,6 +3,7 @@ import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import defaultImage from '../images/picture.png';
 
 function ProfileForm() {
     const [selectedFile, setSelectedFile] = useState()
@@ -39,7 +40,7 @@ function ProfileForm() {
                         marginRight: 'auto'
                     }}
                     style={{objectFit: 'cover', borderRadius: '5px', filter: 'drop-shadow(0 0 0.1rem rgb(0, 0, 0))'}}
-                    src={selectedFile != null ? selectedFile : require('../images/picture.png')}
+                    src={selectedFile != null ? selectedFile : defaultImage}
                 />
                 <Button variant="contained" component="label" onChange={(e) => {fileSelectedHandler(e); fileNameSelectedHandler(e)}}>
                     Upload player image

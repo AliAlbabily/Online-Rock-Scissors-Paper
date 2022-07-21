@@ -4,8 +4,16 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import defaultImage from '../images/picture.png';
+import io from 'socket.io-client';
+
+const socket = io.connect("http://localhost:3001/")
 
 function ProfileForm() {
+    // only for testing
+    socket.on("connect", () => {
+        console.log(`You connected with id: ${socket.id}`)
+    })
+
     const [selectedFile, setSelectedFile] = useState()
     const [selectedFileName, setSelectedFileName] = useState()
     const [selectedPlayerName, setSelectedPlayerName] = useState()

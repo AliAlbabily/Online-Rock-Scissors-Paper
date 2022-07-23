@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import defaultImage from '../images/picture.png';
 import io from 'socket.io-client';
+import { useNavigate } from "react-router-dom";
 
 const socket = io.connect("http://localhost:3001/")
 
@@ -17,6 +18,7 @@ function ProfileForm() {
     const [selectedFile, setSelectedFile] = useState()
     const [selectedFileName, setSelectedFileName] = useState()
     const [selectedPlayerName, setSelectedPlayerName] = useState()
+    const navigate = useNavigate()
 
     const fileSelectedHandler = event => {
         setSelectedFile(URL.createObjectURL(event.target.files[0]))
@@ -34,6 +36,7 @@ function ProfileForm() {
         event.preventDefault()
         console.log(selectedFileName)
         console.log(selectedPlayerName)
+        navigate("../waitingroom", { replace: true })
     }
     
     return (

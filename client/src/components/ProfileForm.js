@@ -36,7 +36,13 @@ function ProfileForm() {
         event.preventDefault()
         console.log(selectedFileName)
         console.log(selectedPlayerName)
-        navigate("../waitingroom", { replace: true })
+        // TODO: ask the server about the number of current users & return the right position
+        // TODO: pass the right position to the second component
+        switchComponent()
+    }
+
+    function switchComponent() {
+        navigate("../waitingroom", {state: {onlineUser: true}})
     }
     
     return (

@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 const socket = io.connect("http://localhost:3001/")
 
 function ProfileForm() {
-    // only for testing
+    // connect to the server
     socket.on("connect", () => {
         console.log(`You connected with id: ${socket.id}`)
     })
@@ -34,15 +34,18 @@ function ProfileForm() {
 
     function handleSubmit(event) {
         event.preventDefault()
-        console.log(selectedFileName)
-        console.log(selectedPlayerName)
-        // TODO: ask the server about the number of current users & return the right position
-        // TODO: pass the right position to the second component
-        switchComponent()
+        // console.log(selectedFileName)
+        // console.log(selectedPlayerName)
+        
+        // ask the server to register the client & return the right position for the client
+        socket.emit('send-client-info', socket.id, serverResponse => {
+            // pass the right position to the second component
+            switchComponent(serverResponse)
+        })
     }
 
-    function switchComponent() {
-        navigate("../waitingroom", {state: {onlineUser: true}})
+    function switchComponent(position) {
+        navigate("../waitingroom", {state: {onlineUser: true, assignedPosition: position}})
     }
     
     return (

@@ -8,7 +8,7 @@ const defalutIconColor = "action"
 function IconWithText(props) {
     return ( 
         <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <PersonIcon sx={{ fontSize: 80 }} color={props.userIsOnline ? "success" : "action"}/>
+            <PersonIcon sx={{ fontSize: 80 }} color={props.componentPosition === props.userPosition ? "success" : "action"}/>
             <p>{props.text}</p>
         </Container>
     );

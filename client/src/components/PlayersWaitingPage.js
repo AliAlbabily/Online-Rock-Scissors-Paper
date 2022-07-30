@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import Grid from '@mui/material/Grid';
 import IconWithText from './IconWithText';
 import LoadingImage from '../images/loadingImage.gif';
 import { useLocation } from 'react-router-dom';
+import { SocketContext } from '../context/socket';
 
 function PlayersWaitingPage() {
     const { state } = useLocation()
+    const socket = useContext(SocketContext)
 
     return ( 
         <Grid container direction="row" justifyContent="center" alignItems="center">

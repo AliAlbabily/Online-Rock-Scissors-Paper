@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import defaultImage from '../images/picture.png';
-import io from 'socket.io-client';
 import { useNavigate } from "react-router-dom";
-
-const socket = io.connect("http://localhost:3001/")
+import { SocketContext } from '../context/socket';
 
 function ProfileForm() {
+    const socket = useContext(SocketContext)
+
     // connect to the server
     socket.on("connect", () => {
         console.log(`You connected with id: ${socket.id}`)
@@ -45,7 +45,7 @@ function ProfileForm() {
     }
 
     function switchComponent(position) {
-        navigate("../waitingroom", {state: {onlineUser: true, assignedPosition: position}})
+        navigate("../waitingroom", {state: {assignedPosition: position}})
     }
     
     return (

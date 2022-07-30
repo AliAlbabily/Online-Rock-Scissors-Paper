@@ -23,14 +23,13 @@ io.on("connection", (socket) => {
         if (clientAtPos1 != clientID && clientAtPos2 != clientID) { // if the client is not registered in either position
             let registered = registerClient(clientID)
 
-            if (registered) {
+            if (registered) { // if registered successfully
                 callback("The player has been registered.", false)
 
                 clientAtPos1 = getClientIDPos1()
                 clientAtPos2 = getClientIDPos2()
 
                 if (clientAtPos1 && clientAtPos2) { // if there are 2 clients
-                    console.log("flag 2")
                     setTimeout(() => { // trigger an action after a period of time
                         io.emit('update-icons-color', true)
                     }, 2000)

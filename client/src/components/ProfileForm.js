@@ -41,14 +41,15 @@ function ProfileForm() {
         // ask the server to register the client & return the right position for the client
         socket.emit('send-client-info', (serverResponseString, serverIsFull) => {
             displayMessage(serverResponseString)
-            switchComponent(serverIsFull)
+            switchComponent(serverIsFull, serverResponseString)
         })
     }
 
-    function switchComponent(serverIsFull) {
+    function switchComponent(serverIsFull, serverResponseString) {
         if (!serverIsFull) { // only allow certain number of players to join at a time
             navigate("../waitingroom")
         }
+        else alert(serverResponseString)
     }
 
     function displayMessage(string) {

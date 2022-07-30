@@ -15,27 +15,50 @@ io.on("connection", (socket) => {
     const clientID = socket.id
     console.log(clientID)
 
-    // automatically register and add the client in the server
-    if (!positions.pos1) { // check if position 1 is empty
-        positions.pos1 = socket.id // register the client to this position
-        console.log("pos1: " + positions.pos1 + " & pos2: " + positions.pos2)
-    }
-    else if (!positions.pos2) { // check if position 2 is empty
-        positions.pos2 = socket.id // register the client to this position
-        console.log("pos1: " + positions.pos1 + " & pos2: " + positions.pos2)
-    }
-    else {
-        console.log("Cannot be registered!")
-    }
-
     // assign the client a position
     socket.on('send-client-info', callback => {
-        const clientAtPos1 = positions['pos1'] // get value
-        const clientAtPos2 = positions['pos2'] // get value
+        let clientAtPos1 = getClientIDPos1()
+        let clientAtPos2 = getClientIDPos2()
 
-        if (clientAtPos1 != clientID && clientAtPos2 != clientID) { // if the player is not registered in either position
-            callback("The server is full. Please try again at some other time.", true)
-        } 
-        else callback("Waiting for players to join", false)
+        if (clientAtPos1 != clientID && clientAtPos2 != clientID) { // if the client is not registered in either position
+            let registered = registerClient(clientID)
+
+            if (registered) {
+                callback("The player has been registered.", false)
+
+                clientAtPos1 = getClientIDPos1()
+                clientAtPos2 = getClientIDPos2()
+
+                if (clientAtPos1 && clientAtPos2) { // if there are 2 clients
+                    console.log("flag 2")
+                    setTimeout(() => { // trigger an action after a period of time
+                        io.emit('update-icons-color', true)
+                    }, 2000)
+                }
+            } 
+            else callback("No space available. Cannot register the player!", true)
+        }
     })
 })
+
+function registerClient(clientID) {
+    if (!positions.pos1) { // check if position 1 is empty
+        positions.pos1 = clientID // register the client to this position
+        console.log("pos1: " + positions.pos1 + " & pos2: " + positions.pos2)
+        return true
+    }
+    else if (!positions.pos2) { // check if position 2 is empty
+        positions.pos2 = clientID // register the client to this position
+        console.log("pos1: " + positions.pos1 + " & pos2: " + positions.pos2)
+        return true
+    }
+    else return false
+}
+
+function getClientIDPos1() {
+    return positions['pos1'] // get value (clientID)
+}
+
+function getClientIDPos2() {
+    return positions['pos2'] // get value (clientID)
+}

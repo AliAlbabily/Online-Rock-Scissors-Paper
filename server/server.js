@@ -12,9 +12,10 @@ const io = require("socket.io")(3001, {
 })
 
 io.on("connection", (socket) => {
-    console.log(socket.id)
+    const clientID = socket.id
+    console.log(clientID)
 
-    // register and add the client in the server
+    // automatically register and add the client in the server
     if (!positions.pos1) { // check if position 1 is empty
         positions.pos1 = socket.id // register the client to this position
         console.log("pos1: " + positions.pos1 + " & pos2: " + positions.pos2)
@@ -28,18 +29,13 @@ io.on("connection", (socket) => {
     }
 
     // assign the client a position
-    socket.on('send-client-info', (clientId, callback) => {
+    socket.on('send-client-info', callback => {
         const clientAtPos1 = positions['pos1'] // get value
         const clientAtPos2 = positions['pos2'] // get value
-        let assignedPosition = ""
 
-        if (clientAtPos1 === clientId) { // check if the clientId matches
-            assignedPosition = "left" // assign client to this position
-        }
-        else if (clientAtPos2 === clientId) { // check if the clientId matches
-            assignedPosition = "right" // assign client to this position
-        }
-
-        callback(assignedPosition)
+        if (clientAtPos1 != clientID && clientAtPos2 != clientID) { // if the player is not registered in either position
+            callback("The server is full. Please try again at some other time.", true)
+        } 
+        else callback("Waiting for players to join", false)
     })
 })

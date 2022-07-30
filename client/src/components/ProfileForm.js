@@ -34,18 +34,25 @@ function ProfileForm() {
 
     function handleSubmit(event) {
         event.preventDefault()
+        // TODO : pass "selectedFileName" & "selectedPlayerName" as args in "send-client-info"
         // console.log(selectedFileName)
         // console.log(selectedPlayerName)
         
         // ask the server to register the client & return the right position for the client
-        socket.emit('send-client-info', socket.id, serverResponse => {
-            // pass the right position to the second component
-            switchComponent(serverResponse)
+        socket.emit('send-client-info', (serverResponseString, serverIsFull) => {
+            displayMessage(serverResponseString)
+            switchComponent(serverIsFull)
         })
     }
 
-    function switchComponent(position) {
-        navigate("../waitingroom", {state: {assignedPosition: position}})
+    function switchComponent(serverIsFull) {
+        if (!serverIsFull) { // only allow certain number of players to join at a time
+            navigate("../waitingroom")
+        }
+    }
+
+    function displayMessage(string) {
+        console.log(string)
     }
     
     return (

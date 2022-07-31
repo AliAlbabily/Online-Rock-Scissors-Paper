@@ -30,9 +30,7 @@ io.on("connection", (socket) => {
                 clientAtPos2 = getClientIDPos2()
 
                 if (clientAtPos1 && clientAtPos2) { // if there are 2 clients
-                    setTimeout(() => { // trigger an action after a period of time
-                        io.emit('update-icons-color', true)
-                    }, 2000)
+                    allClientsRegisteredActions()
                 }
             } 
             else callback("No space available. Cannot register the player!", true)
@@ -60,4 +58,15 @@ function getClientIDPos1() {
 
 function getClientIDPos2() {
     return positions['pos2'] // get value (clientID)
+}
+
+// trigger actions when all the clients are registered
+async function allClientsRegisteredActions() {
+    await delay(2000)
+    io.emit('update-waiting-page-ui', true)
+}
+
+// wait for a period of time
+function delay(time) { 
+    return new Promise(resolve => setTimeout(resolve, time));
 }

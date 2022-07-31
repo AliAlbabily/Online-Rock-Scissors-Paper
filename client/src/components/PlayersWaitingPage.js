@@ -9,8 +9,8 @@ function PlayersWaitingPage() {
     const socket = useContext(SocketContext)
     const [onlineStatus, setOnlineStatus] = useState(false)
 
-    // change icons color when everyone is online
-    socket.on('update-icons-color', conditionStatus => {
+    // update some ui-elements when all the clients are registered
+    socket.on('update-waiting-page-ui', conditionStatus => {
         setOnlineStatus(conditionStatus)
     })
 
@@ -21,7 +21,9 @@ function PlayersWaitingPage() {
             </Grid>
             <Grid item xs={3} style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <img src={LoadingImage} alt="Loading" style={{width: '100%', maxWidth: '200px', height: 'auto'}}/>
-                <p style={{width: '100%', textAlign: 'center'}}>Waiting for players to join..</p>
+                <p style={{width: '100%', textAlign: 'center'}}>
+                    {!onlineStatus ? "Waiting for players to join.." : "Ready to launch"}
+                </p>
             </Grid>
             <Grid item xs={3}>
                 <IconWithText text="Player 2" everyoneIsOnline={onlineStatus} />

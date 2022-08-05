@@ -39,7 +39,7 @@ function ProfileForm() {
         // console.log(selectedPlayerName)
         
         // ask the server to register the client & return the right position for the client
-        socket.emit('send-client-info', (serverResponseString, serverIsFull) => {
+        socket.emit('send-client-info', selectedPlayerName, (serverResponseString, serverIsFull) => {
             displayMessage(serverResponseString)
             switchComponent(serverIsFull, serverResponseString)
         })
@@ -74,7 +74,7 @@ function ProfileForm() {
                     Upload player image
                     <input type="file" hidden/>
                 </Button>
-                <TextField id="outlined-basic" label="Select a name" variant="standard" onChange={nameSelectedHandler}/>
+                <TextField id="outlined-basic" label="Select a name" variant="standard" onChange={nameSelectedHandler} required/>
                 <Button variant="contained" color="primary" type="submit">Submit</Button>
             </FormControl>
         </form>

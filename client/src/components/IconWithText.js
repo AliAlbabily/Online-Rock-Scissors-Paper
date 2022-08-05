@@ -3,8 +3,6 @@ import React from 'react';
 import Container from '@mui/material/Container';
 import PersonIcon from '@mui/icons-material/Person';
 
-const defalutIconColor = "action"
-
 function IconWithText(props) {
     return ( 
         <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

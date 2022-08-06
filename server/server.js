@@ -29,7 +29,7 @@ io.on("connection", (socket) => {
     console.log(clientID)
 
     // assign the client a position
-    socket.on('send-client-info', (playerName, callback) => {
+    socket.on('register-client-info', (playerName, callback) => {
         let clientAtPos1 = getClientIDPos1()
         let clientAtPos2 = getClientIDPos2()
 
@@ -48,6 +48,10 @@ io.on("connection", (socket) => {
             } 
             else callback("No space available. Cannot register the player!", true)
         }
+    })
+
+    socket.on('get-clients-info', callback => {
+        callback(clientsInfo)
     })
 })
 
@@ -78,7 +82,7 @@ function getClientIDPos2() {
 // trigger actions when all the clients are registered
 async function allClientsRegisteredActions() {
     await delay(2000)
-    io.emit('update-waiting-page-ui', true)
+    io.emit('waiting-page-actions', true)
 }
 
 // wait for a period of time

@@ -3,15 +3,17 @@ import React, { useState, useContext } from 'react';
 import Grid from '@mui/material/Grid';
 import IconWithText from './IconWithText';
 import LoadingImage from '../images/loadingImage.gif';
+import { useNavigate } from "react-router-dom";
 import { SocketContext } from '../context/socket';
 
 function PlayersWaitingPage() {
     const socket = useContext(SocketContext)
     const [onlineStatus, setOnlineStatus] = useState(false)
     const [loadingMessage, setLoadingMessage] = useState()
+    const navigate = useNavigate()
 
     // update some ui-elements when all the clients are registered
-    socket.on('update-waiting-page-ui', conditionStatus => {
+    socket.on('waiting-page-actions', conditionStatus => {
         setOnlineStatus(conditionStatus)
         countDown()
     })
@@ -23,13 +25,17 @@ function PlayersWaitingPage() {
         const timeCounter = setInterval(() => {
             if(secondsLeft <= 1) {
                 clearInterval(timeCounter)
-                console.log("done");
+                switchComponent()
             }
             else {
                 secondsLeft -= 1
                 setLoadingMessage(`The game will start in ${secondsLeft}..`)
             }
         }, 1000)
+    }
+
+    function switchComponent() {
+        navigate("../gamepage")
     }
 
     return ( 

@@ -39,7 +39,7 @@ function ProfileForm() {
         // console.log(selectedPlayerName)
         
         // ask the server to register the client & return the right position for the client
-        socket.emit('send-client-info', selectedPlayerName, (serverResponseString, serverIsFull) => {
+        socket.emit('register-client-info', selectedPlayerName, (serverResponseString, serverIsFull) => {
             displayMessage(serverResponseString)
             switchComponent(serverIsFull, serverResponseString)
         })

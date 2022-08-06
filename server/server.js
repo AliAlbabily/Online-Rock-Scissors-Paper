@@ -1,11 +1,21 @@
 
-let positions = {
+const clientsRegistered = {
     pos1: "",
     pos2: ""
 }
 
-let player1Name = ""
-let player2Name = ""
+const clientsInfo = {
+    client1: {
+        position: "left",
+        name: "",
+        image: ""
+    },
+    client2: {
+        position: "right",
+        name: "",
+        image: ""
+    }
+}
 
 const io = require("socket.io")(3001, {
     cors: {
@@ -24,7 +34,7 @@ io.on("connection", (socket) => {
         let clientAtPos2 = getClientIDPos2()
 
         if (clientAtPos1 != clientID && clientAtPos2 != clientID) { // if the client is not registered in either position
-            let registered = registerClient(clientID, playerName)
+            const registered = registerClient(clientID, playerName)
 
             if (registered) { // if registered successfully
                 callback("The player has been registered.", false)
@@ -42,27 +52,27 @@ io.on("connection", (socket) => {
 })
 
 function registerClient(clientID, playerName) {
-    if (!positions.pos1) { // check if position 1 is empty
-        positions.pos1 = clientID // register the client to this position
-        console.log("pos1: " + positions.pos1 + " & pos2: " + positions.pos2)
-        player1Name = playerName
+    if (!clientsRegistered.pos1) { // check if position 1 is empty
+        clientsRegistered.pos1 = clientID // register the client to this position
+        console.log("pos1: " + clientsRegistered.pos1 + " & pos2: " + clientsRegistered.pos2)
+        clientsInfo.client1.name = playerName
         return true
     }
-    else if (!positions.pos2) { // check if position 2 is empty
-        positions.pos2 = clientID // register the client to this position
-        console.log("pos1: " + positions.pos1 + " & pos2: " + positions.pos2)
-        player2Name = playerName
+    else if (!clientsRegistered.pos2) { // check if position 2 is empty
+        clientsRegistered.pos2 = clientID // register the client to this position
+        console.log("pos1: " + clientsRegistered.pos1 + " & pos2: " + clientsRegistered.pos2)
+        clientsInfo.client2.name = playerName
         return true
     }
     else return false
 }
 
 function getClientIDPos1() {
-    return positions['pos1'] // get value (clientID)
+    return clientsRegistered['pos1'] // get value (clientID)
 }
 
 function getClientIDPos2() {
-    return positions['pos2'] // get value (clientID)
+    return clientsRegistered['pos2'] // get value (clientID)
 }
 
 // trigger actions when all the clients are registered

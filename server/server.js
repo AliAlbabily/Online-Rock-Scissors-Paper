@@ -8,12 +8,14 @@ const clientsInfo = {
     client1: {
         position: "left",
         name: "",
-        image: ""
+        image: null,
+        hp: 5
     },
     client2: {
         position: "right",
         name: "",
-        image: ""
+        image: null,
+        hp: 5
     }
 }
 
@@ -29,12 +31,12 @@ io.on("connection", (socket) => {
     console.log(clientID)
 
     // assign the client a position
-    socket.on('register-client-info', (playerName, callback) => {
+    socket.on('register-client-info', (playerName, playerImage, callback) => {
         let clientAtPos1 = getClientIDPos1()
         let clientAtPos2 = getClientIDPos2()
 
         if (clientAtPos1 != clientID && clientAtPos2 != clientID) { // if the client is not registered in either position
-            const registered = registerClient(clientID, playerName)
+            const registered = registerClient(clientID, playerName, playerImage)
 
             if (registered) { // if registered successfully
                 callback("The player has been registered.", false)
@@ -55,17 +57,19 @@ io.on("connection", (socket) => {
     })
 })
 
-function registerClient(clientID, playerName) {
+function registerClient(clientID, playerName, playerImage) {
     if (!clientsRegistered.pos1) { // check if position 1 is empty
         clientsRegistered.pos1 = clientID // register the client to this position
         console.log("pos1: " + clientsRegistered.pos1 + " & pos2: " + clientsRegistered.pos2)
         clientsInfo.client1.name = playerName
+        clientsInfo.client1.image = playerImage
         return true
     }
     else if (!clientsRegistered.pos2) { // check if position 2 is empty
         clientsRegistered.pos2 = clientID // register the client to this position
         console.log("pos1: " + clientsRegistered.pos1 + " & pos2: " + clientsRegistered.pos2)
         clientsInfo.client2.name = playerName
+        clientsInfo.client2.image = playerImage
         return true
     }
     else return false

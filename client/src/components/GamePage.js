@@ -6,17 +6,24 @@ import Box from '@mui/material/Box';
 import defaultImage from '../images/picture.png';
 
 function GamePage() {
-    // const socket = useContext(SocketContext)
-    // const [client1Name, setclient1Name] = useState()
-    // const [client2Name, setclient2Name] = useState()
+    const socket = useContext(SocketContext)
+    const [client1Name, setclient1Name] = useState("Player")
+    const [client2Name, setclient2Name] = useState("Player")
+    const [client1HitPoints, setclient1HitPoints] = useState(1)
+    const [client2HitPoints, setclient2HitPoints] = useState(1)
+    const [client1Image, setclient1Image] = useState()
+    const [client2Image, setclient2Image] = useState()
 
-    // useEffect(() => { // equivalent to componentDidMount
-    //     socket.emit('get-clients-info', clientsInfo => {
-    //         console.log(clientsInfo)
-    //         setclient1Name(clientsInfo.client1.name)
-    //         setclient2Name(clientsInfo.client2.name)
-    //     })
-    // }, [])
+    useEffect(() => { // equivalent to componentDidMount
+        socket.emit('get-clients-info', clientsInfo => {
+            setclient1Name(clientsInfo.client1.name)
+            setclient2Name(clientsInfo.client2.name)
+            setclient1HitPoints(clientsInfo.client1.hp)
+            setclient2HitPoints(clientsInfo.client2.hp)
+            setclient1Image(clientsInfo.client1.image)
+            setclient2Image(clientsInfo.client2.image)
+        })
+    }, [])
 
     return ( 
         <div style={{minWidth: "800px", height: "fit-content", backgroundColor: "grey" }}>
@@ -33,11 +40,11 @@ function GamePage() {
                     }}>
                         <Box component="img" sx={{height: '150px', maxWidth: '150px'}}
                             style={{objectFit: 'cover', filter: 'drop-shadow(0 0 0.1rem rgb(0, 0, 0))'}}
-                            src={defaultImage}
+                            src={client1Image ? client1Image : defaultImage}
                         />
                         <div>
-                            <p>Player 1</p>
-                            <p>HP: 5</p>
+                            <p>{client1Name}</p>
+                            <p>HP: {client1HitPoints}</p>
                         </div>
                     </div>
                 </Grid>
@@ -53,11 +60,11 @@ function GamePage() {
                     }}>
                         <Box component="img" sx={{height: '150px', maxWidth: '150px'}}
                             style={{objectFit: 'cover', filter: 'drop-shadow(0 0 0.1rem rgb(0, 0, 0))'}}
-                            src={defaultImage}
+                            src={client2Image ? client2Image : defaultImage}
                         />
                         <div>
-                            <p>Player 2</p>
-                            <p>HP: 5</p>
+                            <p>{client2Name}</p>
+                            <p>HP: {client2HitPoints}</p>
                         </div>
                     </div>
                 </Grid>

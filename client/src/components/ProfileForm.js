@@ -34,12 +34,9 @@ function ProfileForm() {
 
     function handleSubmit(event) {
         event.preventDefault()
-        // TODO : pass "selectedFileName" & "selectedPlayerName" as args in "send-client-info"
-        // console.log(selectedFileName)
-        // console.log(selectedPlayerName)
         
         // ask the server to register the client & return the right position for the client
-        socket.emit('register-client-info', selectedPlayerName, (serverResponseString, serverIsFull) => {
+        socket.emit('register-client-info', selectedPlayerName, selectedFile, (serverResponseString, serverIsFull) => {
             displayMessage(serverResponseString)
             switchComponent(serverIsFull, serverResponseString)
         })

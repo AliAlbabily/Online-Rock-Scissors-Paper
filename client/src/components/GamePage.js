@@ -14,6 +14,7 @@ function GamePage() {
     const [client2HitPoints, setclient2HitPoints] = useState(1)
     const [client1Image, setclient1Image] = useState()
     const [client2Image, setclient2Image] = useState()
+    const [buttonsVisibilityStatus, setButtonsVisibilityStatus] = useState(false)
 
     useEffect(() => { // equivalent to componentDidMount
         socket.emit('get-clients-info', clientsInfo => {
@@ -27,6 +28,7 @@ function GamePage() {
     }, [])
 
     function registerAction(action) {
+        setButtonsVisibilityStatus(true)
         console.log(action)
     }
 
@@ -65,7 +67,7 @@ function GamePage() {
                             color="secondary" 
                             style={{maxWidth: '200px', maxHeight: '50px', minWidth: '200px', minHeight: '50px'}}
                             onClick={() => { registerAction("Sword") }}
-                            disabled={false}
+                            disabled={buttonsVisibilityStatus}
                         >
                             Sword
                         </Button>
@@ -74,7 +76,7 @@ function GamePage() {
                             color="secondary" 
                             style={{maxWidth: '200px', maxHeight: '50px', minWidth: '200px', minHeight: '50px'}}
                             onClick={() => { registerAction("Magic") }}
-                            disabled={false}
+                            disabled={buttonsVisibilityStatus}
                         >
                             Magic
                         </Button>
@@ -83,7 +85,7 @@ function GamePage() {
                             color="secondary" 
                             style={{maxWidth: '200px', maxHeight: '50px', minWidth: '200px', minHeight: '50px'}}
                             onClick={() => { registerAction("Mirror") }}
-                            disabled={false}
+                            disabled={buttonsVisibilityStatus}
                         >
                             Mirror
                         </Button>

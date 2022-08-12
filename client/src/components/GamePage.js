@@ -3,6 +3,7 @@ import { SocketContext } from '../context/socket';
 
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import defaultImage from '../images/picture.png';
 
 function GamePage() {
@@ -24,6 +25,10 @@ function GamePage() {
             setclient2Image(clientsInfo.client2.image)
         })
     }, [])
+
+    function registerAction(action) {
+        console.log(action)
+    }
 
     return ( 
         <div style={{minWidth: "800px", height: "fit-content", backgroundColor: "grey" }}>
@@ -49,7 +54,40 @@ function GamePage() {
                     </div>
                 </Grid>
                 <Grid item xs={4}>
-                    <div style={{backgroundColor: "#ffffff", height: "250px"}}>3</div>
+                    <div style={{backgroundColor: "#ffffff", height: "250px", 
+                        display: "flex",
+                        flexDirection: "column",
+                        justifyContent: "space-evenly",
+                        alignItems: "center"}}
+                    >
+                        <Button 
+                            variant="contained" 
+                            color="secondary" 
+                            style={{maxWidth: '200px', maxHeight: '50px', minWidth: '200px', minHeight: '50px'}}
+                            onClick={() => { registerAction("Sword") }}
+                            disabled={false}
+                        >
+                            Sword
+                        </Button>
+                        <Button 
+                            variant="contained" 
+                            color="secondary" 
+                            style={{maxWidth: '200px', maxHeight: '50px', minWidth: '200px', minHeight: '50px'}}
+                            onClick={() => { registerAction("Magic") }}
+                            disabled={false}
+                        >
+                            Magic
+                        </Button>
+                        <Button 
+                            variant="contained" 
+                            color="secondary" 
+                            style={{maxWidth: '200px', maxHeight: '50px', minWidth: '200px', minHeight: '50px'}}
+                            onClick={() => { registerAction("Mirror") }}
+                            disabled={false}
+                        >
+                            Mirror
+                        </Button>
+                    </div>
                 </Grid>
                 <Grid item xs={4}>
                     <div style={{backgroundColor: "#ffffff", height: "250px",

@@ -63,8 +63,8 @@ io.on("connection", (socket) => {
     socket.on('send-client-action', (action, id) => {
         registerClientAction(action, id)
         const allClientsHavePerformedActions = checkAllClientsActions()
-        // TODO : reset all clients' "actionIsPerformed" & set them to "false"
-        // TODO : compare clients' actions
+        // TODO: reset all clients' "actionIsPerformed" & set them to "false"
+        // TODO: compare clients' actions
     })
 })
 

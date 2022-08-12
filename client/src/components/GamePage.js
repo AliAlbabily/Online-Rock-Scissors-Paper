@@ -25,7 +25,7 @@ function GamePage() {
             setclient1Image(clientsInfo.client1.image)
             setclient2Image(clientsInfo.client2.image)
         })
-    }, [])
+    }, [socket])
 
     function registerAction(action) {
         setButtonsVisibilityStatus(true)

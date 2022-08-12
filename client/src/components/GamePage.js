@@ -29,7 +29,7 @@ function GamePage() {
 
     function registerAction(action) {
         setButtonsVisibilityStatus(true)
-        console.log(action)
+        socket.emit('send-client-action', action, socket.id)
     }
 
     return ( 

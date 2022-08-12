@@ -6,16 +6,22 @@ const clientsRegistered = {
 
 const clientsInfo = {
     client1: {
+        id: "",
         position: "left",
         name: "",
         image: null,
-        hp: 5
+        hp: 5,
+        actionIsPerformed: false,
+        latestAction: ""
     },
     client2: {
+        id: "",
         position: "right",
         name: "",
         image: null,
-        hp: 5
+        hp: 5,
+        actionIsPerformed: false,
+        latestAction: ""
     }
 }
 
@@ -55,12 +61,20 @@ io.on("connection", (socket) => {
     socket.on('get-clients-info', callback => {
         callback(clientsInfo)
     })
+
+    socket.on('send-client-action', (action, id) => {
+        registerClientAction(action, id)
+        const allClientsHavePerformedActions = checkAllClientsActions()
+        // TODO : reset all clients' "actionIsPerformed" & set them to "false"
+        // TODO : compare clients' actions
+    })
 })
 
 function registerClient(clientID, playerName, playerImage) {
     if (!clientsRegistered.pos1) { // check if position 1 is empty
         clientsRegistered.pos1 = clientID // register the client to this position
         console.log("pos1: " + clientsRegistered.pos1 + " & pos2: " + clientsRegistered.pos2)
+        clientsInfo.client1.id = clientID
         clientsInfo.client1.name = playerName
         clientsInfo.client1.image = playerImage
         return true
@@ -68,11 +82,37 @@ function registerClient(clientID, playerName, playerImage) {
     else if (!clientsRegistered.pos2) { // check if position 2 is empty
         clientsRegistered.pos2 = clientID // register the client to this position
         console.log("pos1: " + clientsRegistered.pos1 + " & pos2: " + clientsRegistered.pos2)
+        clientsInfo.client2.id = clientID
         clientsInfo.client2.name = playerName
         clientsInfo.client2.image = playerImage
         return true
     }
     else return false
+}
+
+function registerClientAction(action, clientId) {
+    if (clientId === clientsInfo.client1.id) {
+        console.log("Action performed by client 1")
+        clientsInfo.client1.actionIsPerformed = true
+        clientsInfo.client1.latestAction = action
+    }
+    else if (clientId === clientsInfo.client2.id) {
+        console.log("Action performed by client 2")
+        clientsInfo.client2.actionIsPerformed = true
+        clientsInfo.client2.latestAction = action
+    }
+}
+
+// check if all clients have performed an action
+function checkAllClientsActions() {
+    if (clientsInfo.client1.actionIsPerformed && clientsInfo.client2.actionIsPerformed) {
+        console.log("All clients have performed an action")
+        return true
+    }
+    else {
+        console.log("Waiting for 1 more player to perform an action")
+        return false
+    }
 }
 
 function getClientIDPos1() {

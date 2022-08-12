@@ -63,8 +63,9 @@ io.on("connection", (socket) => {
     socket.on('send-client-action', (action, id) => {
         registerClientAction(action, id)
         const allClientsHavePerformedActions = checkAllClientsActions()
-        // TODO: reset all clients' "actionIsPerformed" & set them to "false"
         // TODO: compare clients' actions
+        compareAllClientsActions(allClientsHavePerformedActions)
+        resetAllClientsActions(allClientsHavePerformedActions)
     })
 })
 
@@ -110,6 +111,49 @@ function checkAllClientsActions() {
     else {
         console.log("Waiting for 1 more player to perform an action")
         return false
+    }
+}
+
+function compareAllClientsActions(allClientsHavePerformedActions) {
+    if (allClientsHavePerformedActions) {
+        const client1Action = clientsInfo.client1.latestAction
+        const client2Action = clientsInfo.client2.latestAction
+
+        if (client1Action === client2Action) {
+            console.log("1: Draw")
+        }
+        else if (client1Action === "Sword") {
+            if (client2Action === "Mirror") {
+                console.log("2: " + clientsInfo.client1.name + " wins!")
+            }
+            else if (client2Action === "Magic") {
+                console.log("3: " + clientsInfo.client2.name + " wins!")
+            }
+        }
+        else if (client1Action === "Mirror") {
+            if (client2Action === "Sword") {
+                console.log("4: " + clientsInfo.client2.name + " wins!")
+            }
+            else if (client2Action === "Magic") {
+                console.log("5: " + clientsInfo.client1.name + " wins!")
+            }
+        }
+        else if (client1Action === "Magic") {
+            if (client2Action === "Sword") {
+                console.log("6: " + clientsInfo.client1.name + " wins!")
+            }
+            else if (client2Action === "Mirror") {
+                console.log("7: " + clientsInfo.client2.name + " wins!")
+            }
+        }
+    }
+}
+
+// change the status of all clients actions to "false"
+function resetAllClientsActions(allClientsHavePerformedActions) {
+    if (allClientsHavePerformedActions) {
+        clientsInfo.client1.actionIsPerformed = false
+        clientsInfo.client2.actionIsPerformed = false
     }
 }
 

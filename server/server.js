@@ -7,7 +7,6 @@ const clientsRegistered = {
 const clientsInfo = {
     client1: {
         id: "",
-        position: "left",
         name: "",
         image: null,
         hp: 5,
@@ -16,7 +15,6 @@ const clientsInfo = {
     },
     client2: {
         id: "",
-        position: "right",
         name: "",
         image: null,
         hp: 5,
@@ -73,7 +71,7 @@ io.on("connection", (socket) => {
 function registerClient(clientID, playerName, playerImage) {
     if (!clientsRegistered.pos1) { // check if position 1 is empty
         clientsRegistered.pos1 = clientID // register the client to this position
-        console.log("pos1: " + clientsRegistered.pos1 + " & pos2: " + clientsRegistered.pos2)
+        console.log("pos1: " + clientsRegistered.pos1 + " & pos2: " + clientsRegistered.pos2) // left for testing
         clientsInfo.client1.id = clientID
         clientsInfo.client1.name = playerName
         clientsInfo.client1.image = playerImage
@@ -81,7 +79,7 @@ function registerClient(clientID, playerName, playerImage) {
     }
     else if (!clientsRegistered.pos2) { // check if position 2 is empty
         clientsRegistered.pos2 = clientID // register the client to this position
-        console.log("pos1: " + clientsRegistered.pos1 + " & pos2: " + clientsRegistered.pos2)
+        console.log("pos1: " + clientsRegistered.pos1 + " & pos2: " + clientsRegistered.pos2) // left for testing
         clientsInfo.client2.id = clientID
         clientsInfo.client2.name = playerName
         clientsInfo.client2.image = playerImage

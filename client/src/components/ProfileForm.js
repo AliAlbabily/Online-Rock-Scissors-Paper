@@ -16,7 +16,6 @@ function ProfileForm() {
     })
 
     const [selectedFile, setSelectedFile] = useState()
-    const [selectedFileName, setSelectedFileName] = useState()
     const [selectedPlayerName, setSelectedPlayerName] = useState()
     const navigate = useNavigate()
 
@@ -25,7 +24,7 @@ function ProfileForm() {
     }
     
     const fileNameSelectedHandler = event => {
-        setSelectedFileName(event.target.files[0].name)
+        console.log(event.target.files[0].name)
     }
 
     const nameSelectedHandler = event => {

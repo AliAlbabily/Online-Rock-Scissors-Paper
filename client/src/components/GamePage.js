@@ -5,6 +5,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import defaultImage from '../images/picture.png';
+import ActionsDisplay from './ActionsDisplay';
 
 function GamePage() {
     const socket = useContext(SocketContext)
@@ -41,7 +42,7 @@ function GamePage() {
         <div style={{minWidth: "800px", height: "fit-content", backgroundColor: "grey" }}>
             <Grid container rowSpacing={2} columnSpacing={{ xs: 2, sm: 2, md: 2 }}>
                 <Grid item xs={12}>
-                    <div style={{backgroundColor: "#ffffff", height: "250px" }}>1</div>
+                    <ActionsDisplay />
                 </Grid>
                 <Grid item xs={4}>
                     <div style={{backgroundColor: "#ffffff", height: "250px", 

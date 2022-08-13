@@ -27,6 +27,11 @@ function GamePage() {
         })
     }, [socket])
 
+    socket.on('send-client-hp', (newHP, selectedClient) => {
+        if (selectedClient === "client1") setclient1HitPoints(newHP)
+        else if (selectedClient === "client2") setclient2HitPoints(newHP)
+    })
+
     function registerAction(action) {
         setButtonsVisibilityStatus(true)
         socket.emit('send-client-action', action, socket.id)

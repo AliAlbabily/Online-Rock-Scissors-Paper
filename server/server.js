@@ -125,28 +125,53 @@ function compareAllClientsActions(allClientsHavePerformedActions) {
         else if (client1Action === "Sword") {
             if (client2Action === "Mirror") {
                 console.log("2: " + clientsInfo.client1.name + " wins!")
+                updateClientHP("client2")
             }
             else if (client2Action === "Magic") {
                 console.log("3: " + clientsInfo.client2.name + " wins!")
+                updateClientHP("client1")
             }
         }
         else if (client1Action === "Mirror") {
             if (client2Action === "Sword") {
                 console.log("4: " + clientsInfo.client2.name + " wins!")
+                updateClientHP("client1")
             }
             else if (client2Action === "Magic") {
                 console.log("5: " + clientsInfo.client1.name + " wins!")
+                updateClientHP("client2")
             }
         }
         else if (client1Action === "Magic") {
             if (client2Action === "Sword") {
                 console.log("6: " + clientsInfo.client1.name + " wins!")
+                updateClientHP("client2")
             }
             else if (client2Action === "Mirror") {
                 console.log("7: " + clientsInfo.client2.name + " wins!")
+                updateClientHP("client1")
             }
         }
     }
+}
+
+/** @param {string} clientToUpdate : the client that lost the round */
+function updateClientHP(clientToUpdate) {
+    let newClientHP = 0
+
+    if (clientToUpdate === "client1") {
+        newClientHP = clientsInfo.client1.hp - 1
+        sendUpdatedClientHP(newClientHP, clientToUpdate)
+    }
+    else if (clientToUpdate === "client2") {
+        newClientHP = clientsInfo.client2.hp - 1
+        sendUpdatedClientHP(newClientHP, clientToUpdate)
+    }
+}
+
+// send the updated client's hp back to all clients
+function sendUpdatedClientHP(hpToSend, selectedClient) {
+    io.emit("send-client-hp", hpToSend, selectedClient)
 }
 
 // change the status of all clients actions to "false"

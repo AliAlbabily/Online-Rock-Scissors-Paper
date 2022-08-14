@@ -66,7 +66,9 @@ io.on("connection", (socket) => {
         const actionsResult = compareAllClientsActions(allClientsHavePerformedActions)
         resetAllClientsActions(allClientsHavePerformedActions)
         sendClientsActionsResult(allClientsHavePerformedActions, actionsResult)
-        // TODO: check clients' hp and set the winner
+        const gameIsOver = checkIfGameIsOver(allClientsHavePerformedActions)
+        // TODO: if "gameIsOver" is true, end the game & display a gameover window
+        // TODO: if "gameIsOver" is false, initiate a new round
     })
 })
 
@@ -170,10 +172,12 @@ function updateClientHP(clientToUpdate) {
     if (clientToUpdate === "client1") {
         newClientHP = clientsInfo.client1.hp - 1
         sendUpdatedClientHP(newClientHP, clientToUpdate)
+        clientsInfo.client1.hp = newClientHP // update client's hp stored in the server
     }
     else if (clientToUpdate === "client2") {
         newClientHP = clientsInfo.client2.hp - 1
         sendUpdatedClientHP(newClientHP, clientToUpdate)
+        clientsInfo.client2.hp = newClientHP // update client's hp stored in the server
     }
 }
 
@@ -199,6 +203,21 @@ function resetAllClientsActions(allClientsHavePerformedActions) {
         clientsInfo.client1.actionIsPerformed = false
         clientsInfo.client2.actionIsPerformed = false
     }
+}
+
+// check if there is a winner and return a signal when the game is over
+function checkIfGameIsOver(allClientsHavePerformedActions) {
+    if (allClientsHavePerformedActions) {
+        if (clientsInfo.client1.hp === 0) {
+            console.log("Game Over! " + clientsInfo.client2.name + " is the winner!")
+            return true
+        }
+        else if (clientsInfo.client2.hp === 0) {
+            console.log("Game Over! " + clientsInfo.client1.name + " is the winner!")
+            return true
+        }
+    }
+    return false
 }
 
 function getClientIDPos1() {

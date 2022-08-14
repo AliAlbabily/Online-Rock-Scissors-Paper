@@ -33,6 +33,10 @@ function GamePage() {
         else if (selectedClient === "client2") setclient2HitPoints(newHP)
     })
 
+    socket.on("initiate-new-round", enabled => {
+        setButtonsVisibilityStatus(enabled)
+    })
+
     function registerAction(action) {
         setButtonsVisibilityStatus(true)
         socket.emit('send-client-action', action, socket.id)

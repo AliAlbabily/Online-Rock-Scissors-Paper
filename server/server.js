@@ -65,12 +65,11 @@ io.on("connection", (socket) => {
         const allClientsHavePerformedActions = checkAllClientsActions()
         if (allClientsHavePerformedActions) {
             const actionsResult = compareAllClientsActions()
-            resetAllClientsActions()
             sendClientsActionsResult(actionsResult)
             const gameIsOver = checkIfGameIsOver()
-            console.log(gameIsOver)
             // TODO: if "gameIsOver" is true, end the game & display a gameover window
-            // TODO: if "gameIsOver" is false, initiate a new round
+            if (gameIsOver) console.log("Game Over!")
+            else initiateNewRound()
         }
     })
 })
@@ -213,6 +212,11 @@ function checkIfGameIsOver() {
         return true
     }
     return false
+}
+
+function initiateNewRound() {
+    resetAllClientsActions()
+    io.emit("initiate-new-round", false)
 }
 
 function getClientIDPos1() {

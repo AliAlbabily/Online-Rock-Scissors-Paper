@@ -63,12 +63,15 @@ io.on("connection", (socket) => {
     socket.on('send-client-action', (action, id) => {
         registerClientAction(action, id)
         const allClientsHavePerformedActions = checkAllClientsActions()
-        const actionsResult = compareAllClientsActions(allClientsHavePerformedActions)
-        resetAllClientsActions(allClientsHavePerformedActions)
-        sendClientsActionsResult(allClientsHavePerformedActions, actionsResult)
-        const gameIsOver = checkIfGameIsOver(allClientsHavePerformedActions)
-        // TODO: if "gameIsOver" is true, end the game & display a gameover window
-        // TODO: if "gameIsOver" is false, initiate a new round
+        if (allClientsHavePerformedActions) {
+            const actionsResult = compareAllClientsActions()
+            resetAllClientsActions()
+            sendClientsActionsResult(actionsResult)
+            const gameIsOver = checkIfGameIsOver()
+            console.log(gameIsOver)
+            // TODO: if "gameIsOver" is true, end the game & display a gameover window
+            // TODO: if "gameIsOver" is false, initiate a new round
+        }
     })
 })
 
@@ -117,50 +120,48 @@ function checkAllClientsActions() {
     }
 }
 
-function compareAllClientsActions(allClientsHavePerformedActions) {
-    if (allClientsHavePerformedActions) {
-        const client1Action = clientsInfo.client1.latestAction
-        const client2Action = clientsInfo.client2.latestAction
+function compareAllClientsActions() {
+    const client1Action = clientsInfo.client1.latestAction
+    const client2Action = clientsInfo.client2.latestAction
 
-        if (client1Action === client2Action) {
-            console.log("1: Draw")
-            return "Draw"
+    if (client1Action === client2Action) {
+        console.log("1: Draw")
+        return "Draw"
+    }
+    else if (client1Action === "Sword") {
+        if (client2Action === "Mirror") {
+            console.log("2: " + clientsInfo.client1.name + " wins!")
+            updateClientHP("client2")
+            return clientsInfo.client1.name
         }
-        else if (client1Action === "Sword") {
-            if (client2Action === "Mirror") {
-                console.log("2: " + clientsInfo.client1.name + " wins!")
-                updateClientHP("client2")
-                return clientsInfo.client1.name
-            }
-            else if (client2Action === "Magic") {
-                console.log("3: " + clientsInfo.client2.name + " wins!")
-                updateClientHP("client1")
-                return clientsInfo.client2.name
-            }
+        else if (client2Action === "Magic") {
+            console.log("3: " + clientsInfo.client2.name + " wins!")
+            updateClientHP("client1")
+            return clientsInfo.client2.name
         }
-        else if (client1Action === "Mirror") {
-            if (client2Action === "Sword") {
-                console.log("4: " + clientsInfo.client2.name + " wins!")
-                updateClientHP("client1")
-                return clientsInfo.client2.name
-            }
-            else if (client2Action === "Magic") {
-                console.log("5: " + clientsInfo.client1.name + " wins!")
-                updateClientHP("client2")
-                return clientsInfo.client1.name
-            }
+    }
+    else if (client1Action === "Mirror") {
+        if (client2Action === "Sword") {
+            console.log("4: " + clientsInfo.client2.name + " wins!")
+            updateClientHP("client1")
+            return clientsInfo.client2.name
         }
-        else if (client1Action === "Magic") {
-            if (client2Action === "Sword") {
-                console.log("6: " + clientsInfo.client1.name + " wins!")
-                updateClientHP("client2")
-                return clientsInfo.client1.name
-            }
-            else if (client2Action === "Mirror") {
-                console.log("7: " + clientsInfo.client2.name + " wins!")
-                updateClientHP("client1")
-                return clientsInfo.client2.name
-            }
+        else if (client2Action === "Magic") {
+            console.log("5: " + clientsInfo.client1.name + " wins!")
+            updateClientHP("client2")
+            return clientsInfo.client1.name
+        }
+    }
+    else if (client1Action === "Magic") {
+        if (client2Action === "Sword") {
+            console.log("6: " + clientsInfo.client1.name + " wins!")
+            updateClientHP("client2")
+            return clientsInfo.client1.name
+        }
+        else if (client2Action === "Mirror") {
+            console.log("7: " + clientsInfo.client2.name + " wins!")
+            updateClientHP("client1")
+            return clientsInfo.client2.name
         }
     }
 }
@@ -187,35 +188,29 @@ function sendUpdatedClientHP(hpToSend, selectedClient) {
 }
 
 // send the result of clients' actions back to the clients
-function sendClientsActionsResult(allClientsHavePerformedActions, winnerName) {
-    if (allClientsHavePerformedActions) {
-        const client1Action = clientsInfo.client1.latestAction
-        const client2Action = clientsInfo.client2.latestAction
-        const client1Name = clientsInfo.client1.name
-        const client2Name = clientsInfo.client2.name
-        io.emit("send-actions-result", client1Name, client2Name, client1Action, client2Action, winnerName)
-    }
+function sendClientsActionsResult(winnerName) {
+    const client1Action = clientsInfo.client1.latestAction
+    const client2Action = clientsInfo.client2.latestAction
+    const client1Name = clientsInfo.client1.name
+    const client2Name = clientsInfo.client2.name
+    io.emit("send-actions-result", client1Name, client2Name, client1Action, client2Action, winnerName)
 }
 
 // change the status of all clients actions to "false"
-function resetAllClientsActions(allClientsHavePerformedActions) {
-    if (allClientsHavePerformedActions) {
-        clientsInfo.client1.actionIsPerformed = false
-        clientsInfo.client2.actionIsPerformed = false
-    }
+function resetAllClientsActions() {
+    clientsInfo.client1.actionIsPerformed = false
+    clientsInfo.client2.actionIsPerformed = false
 }
 
 // check if there is a winner and return a signal when the game is over
-function checkIfGameIsOver(allClientsHavePerformedActions) {
-    if (allClientsHavePerformedActions) {
-        if (clientsInfo.client1.hp === 0) {
-            console.log("Game Over! " + clientsInfo.client2.name + " is the winner!")
-            return true
-        }
-        else if (clientsInfo.client2.hp === 0) {
-            console.log("Game Over! " + clientsInfo.client1.name + " is the winner!")
-            return true
-        }
+function checkIfGameIsOver() {
+    if (clientsInfo.client1.hp === 0) {
+        console.log("Game Over! " + clientsInfo.client2.name + " is the winner!")
+        return true
+    }
+    else if (clientsInfo.client2.hp === 0) {
+        console.log("Game Over! " + clientsInfo.client1.name + " is the winner!")
+        return true
     }
     return false
 }

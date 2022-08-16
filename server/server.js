@@ -67,8 +67,7 @@ io.on("connection", (socket) => {
             const actionsResult = compareAllClientsActions()
             sendClientsActionsResult(actionsResult)
             const gameIsOver = checkIfGameIsOver()
-            // TODO: if "gameIsOver" is true, end the game & display a gameover window
-            if (gameIsOver) console.log("Game Over!")
+            if (gameIsOver) endTheGame()
             else initiateNewRound()
         }
     })
@@ -204,14 +203,23 @@ function resetAllClientsActions() {
 // check if there is a winner and return a signal when the game is over
 function checkIfGameIsOver() {
     if (clientsInfo.client1.hp === 0) {
-        console.log("Game Over! " + clientsInfo.client2.name + " is the winner!")
         return true
     }
     else if (clientsInfo.client2.hp === 0) {
-        console.log("Game Over! " + clientsInfo.client1.name + " is the winner!")
         return true
     }
     return false
+}
+
+function endTheGame() {
+    const winnerName = getWinnerName()
+    console.log("Game Over! The winner is " + winnerName)
+    io.emit("game-over-signal", winnerName)
+}
+
+function getWinnerName() {
+    if (clientsInfo.client1.hp === 0) return clientsInfo.client2.name
+    else if (clientsInfo.client2.hp === 0) return clientsInfo.client1.name
 }
 
 function initiateNewRound() {

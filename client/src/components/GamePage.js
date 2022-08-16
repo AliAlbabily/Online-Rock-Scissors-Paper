@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import defaultImage from '../images/picture.png';
 import ActionsDisplay from './ActionsDisplay';
+import DialogComponent from './DialogComponent'
 
 function GamePage() {
     const socket = useContext(SocketContext)
@@ -16,6 +17,8 @@ function GamePage() {
     const [client1Image, setclient1Image] = useState()
     const [client2Image, setclient2Image] = useState()
     const [buttonsVisibilityStatus, setButtonsVisibilityStatus] = useState(false)
+    const [open, setOpen] = useState(false)
+    const [winnerName, setWinnerName] = useState("Player")
 
     useEffect(() => { // equivalent to componentDidMount
         socket.emit('get-clients-info', clientsInfo => {
@@ -33,6 +36,11 @@ function GamePage() {
         else if (selectedClient === "client2") setclient2HitPoints(newHP)
     })
 
+    socket.on("game-over-signal", winnerName => {
+        setWinnerName(winnerName)
+        setOpen(true)
+    })
+
     socket.on("initiate-new-round", enabled => {
         setButtonsVisibilityStatus(enabled)
     })
@@ -40,6 +48,11 @@ function GamePage() {
     function registerAction(action) {
         setButtonsVisibilityStatus(true)
         socket.emit('send-client-action', action, socket.id)
+    }
+
+    const handleClose = (event, reason) => { // FIXME: pressing "ESC" will cause the dialog to close
+        if (reason && reason === "backdropClick") return
+        setOpen(false)
     }
 
     return ( 
@@ -119,6 +132,7 @@ function GamePage() {
                     </div>
                 </Grid>
             </Grid>
+            <DialogComponent open={open} onClose={handleClose} winnerName={winnerName} />
         </div>
     );
 }

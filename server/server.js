@@ -35,25 +35,17 @@ io.on("connection", (socket) => {
     console.log(clientID)
 
     // assign the client a position
-    socket.on('register-client-info', (playerName, playerImage, callback) => {
-        let clientAtPos1 = getClientIDPos1()
-        let clientAtPos2 = getClientIDPos2()
+    socket.on('register-client-info', (playerID, playerName, playerImage, callback) => {  
+        const registered = registerClient(playerID, playerName, playerImage)
 
-        if (clientAtPos1 != clientID && clientAtPos2 != clientID) { // if the client is not registered in either position
-            const registered = registerClient(clientID, playerName, playerImage)
+        if (registered) { // if registered successfully
+            callback("The player has been registered.", false)
 
-            if (registered) { // if registered successfully
-                callback("The player has been registered.", false)
-
-                clientAtPos1 = getClientIDPos1()
-                clientAtPos2 = getClientIDPos2()
-
-                if (clientAtPos1 && clientAtPos2) { // if there are 2 clients
-                    allClientsRegisteredActions()
-                }
-            } 
-            else callback("No space available. Cannot register the player!", true)
-        }
+            if (clientsRegistered.pos1 && clientsRegistered.pos2) { // if all clients are connected
+                allClientsRegisteredActions()
+            }
+        } 
+        else callback("No space available. Cannot register the player!", true)
     })
 
     socket.on('get-clients-info', callback => {
@@ -73,34 +65,34 @@ io.on("connection", (socket) => {
     })
 })
 
-function registerClient(clientID, playerName, playerImage) {
-    if (!clientsRegistered.pos1) { // check if position 1 is empty
-        clientsRegistered.pos1 = clientID // register the client to this position
+function registerClient(playerID, playerName, playerImage) {
+    if (clientsRegistered.pos1 === "") { // check if position 1 is empty
+        clientsRegistered.pos1 = playerID // register the client to this position
         console.log("pos1: " + clientsRegistered.pos1 + " & pos2: " + clientsRegistered.pos2) // left for testing
-        clientsInfo.client1.id = clientID
+        clientsInfo.client1.id = playerID
         clientsInfo.client1.name = playerName
         clientsInfo.client1.image = playerImage
         return true
     }
-    else if (!clientsRegistered.pos2) { // check if position 2 is empty
-        clientsRegistered.pos2 = clientID // register the client to this position
+    if (clientsRegistered.pos2 === "") { // check if position 2 is empty
+        clientsRegistered.pos2 = playerID // register the client to this position
         console.log("pos1: " + clientsRegistered.pos1 + " & pos2: " + clientsRegistered.pos2) // left for testing
-        clientsInfo.client2.id = clientID
+        clientsInfo.client2.id = playerID
         clientsInfo.client2.name = playerName
         clientsInfo.client2.image = playerImage
         return true
     }
-    else return false
+    return false
 }
 
 function registerClientAction(action, clientId) {
     if (clientId === clientsInfo.client1.id) {
-        console.log("Action performed by client 1")
+        console.log("Client 1 chose: " + action)
         clientsInfo.client1.actionIsPerformed = true
         clientsInfo.client1.latestAction = action
     }
     else if (clientId === clientsInfo.client2.id) {
-        console.log("Action performed by client 2")
+        console.log("Client 2 chose: " + action)
         clientsInfo.client2.actionIsPerformed = true
         clientsInfo.client2.latestAction = action
     }
@@ -215,6 +207,7 @@ function endTheGame() {
     const winnerName = getWinnerName()
     console.log("Game Over! The winner is " + winnerName)
     io.emit("game-over-signal", winnerName)
+    initiateNewGame()
 }
 
 function getWinnerName() {
@@ -222,17 +215,33 @@ function getWinnerName() {
     else if (clientsInfo.client2.hp === 0) return clientsInfo.client1.name
 }
 
+function initiateNewGame() {
+    resetClientsPositions()
+    resetClientsData()
+}
+
+function resetClientsPositions() {
+    clientsRegistered.pos1 = ""
+    clientsRegistered.pos2 = ""
+}
+
+function resetClientsData() {
+    setClientDataToDefault(clientsInfo.client1)
+    setClientDataToDefault(clientsInfo.client2)
+}
+
+function setClientDataToDefault(client) {
+    client.id = ""
+    client.name = ""
+    client.image = null
+    client.hp = 5
+    client.actionIsPerformed = false
+    client.latestAction = ""
+}
+
 function initiateNewRound() {
     resetAllClientsActions()
     io.emit("initiate-new-round", false)
-}
-
-function getClientIDPos1() {
-    return clientsRegistered['pos1'] // get value (clientID)
-}
-
-function getClientIDPos2() {
-    return clientsRegistered['pos2'] // get value (clientID)
 }
 
 // trigger actions when all the clients are registered

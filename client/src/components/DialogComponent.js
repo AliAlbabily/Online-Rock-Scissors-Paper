@@ -2,8 +2,11 @@ import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
+import { useNavigate } from "react-router-dom";
 
 function DialogComponent(props) {
+    const navigate = useNavigate()
+
     return (
         <div>
             <Dialog open={props.open} onClose={props.onClose}>
@@ -15,7 +18,7 @@ function DialogComponent(props) {
                         color="secondary"
                         onClick={() => {
                             props.onClose()
-                            // TODO: restart the game
+                            navigate("../") // switch to another component
                         }}>
                         Restart
                     </Button>

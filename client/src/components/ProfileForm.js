@@ -16,7 +16,6 @@ function ProfileForm() {
     })
 
     const [selectedFile, setSelectedFile] = useState()
-    const [selectedFileName, setSelectedFileName] = useState()
     const [selectedPlayerName, setSelectedPlayerName] = useState()
     const navigate = useNavigate()
 
@@ -25,7 +24,7 @@ function ProfileForm() {
     }
     
     const fileNameSelectedHandler = event => {
-        setSelectedFileName(event.target.files[0].name)
+        console.log(event.target.files[0].name)
     }
 
     const nameSelectedHandler = event => {
@@ -34,12 +33,9 @@ function ProfileForm() {
 
     function handleSubmit(event) {
         event.preventDefault()
-        // TODO : pass "selectedFileName" & "selectedPlayerName" as args in "send-client-info"
-        // console.log(selectedFileName)
-        // console.log(selectedPlayerName)
         
         // ask the server to register the client & return the right position for the client
-        socket.emit('send-client-info', selectedPlayerName, (serverResponseString, serverIsFull) => {
+        socket.emit('register-client-info', socket.id, selectedPlayerName, selectedFile, (serverResponseString, serverIsFull) => {
             displayMessage(serverResponseString)
             switchComponent(serverIsFull, serverResponseString)
         })

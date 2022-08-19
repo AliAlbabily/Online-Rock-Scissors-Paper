@@ -56,18 +56,19 @@ function GamePage() {
     }
 
     return ( 
-        <div style={{minWidth: "800px", height: "fit-content", backgroundColor: "grey" }}>
+        <div style={{minWidth: "800px", height: "fit-content"}}>
             <Grid container rowSpacing={2} columnSpacing={{ xs: 2, sm: 2, md: 2 }}>
                 <Grid item xs={12}>
                     <ActionsDisplay />
                 </Grid>
                 <Grid item xs={4}>
-                    <div style={{backgroundColor: "#ffffff", height: "250px", 
+                    <div style={{backgroundColor: "azure", borderRadius: "5px", height: "250px", 
                         display: "flex", 
                         flexDirection: "row",
                         alignItems: "center",
-                        justifyContent: "space-around"
-                    }}>
+                        justifyContent: "space-around",
+                        boxShadow: "rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset"}}
+                    >
                         <Box component="img" sx={{height: '150px', maxWidth: '150px'}}
                             style={{objectFit: 'cover', filter: 'drop-shadow(0 0 0.1rem rgb(0, 0, 0))'}}
                             src={client1Image ? client1Image : defaultImage}
@@ -79,11 +80,12 @@ function GamePage() {
                     </div>
                 </Grid>
                 <Grid item xs={4}>
-                    <div style={{backgroundColor: "#ffffff", height: "250px", 
+                    <div style={{backgroundColor: "azure", borderRadius: "5px", height: "250px", 
                         display: "flex",
                         flexDirection: "column",
                         justifyContent: "space-evenly",
-                        alignItems: "center"}}
+                        alignItems: "center",
+                        boxShadow: "rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset"}}
                     >
                         <Button 
                             variant="contained" 
@@ -115,12 +117,13 @@ function GamePage() {
                     </div>
                 </Grid>
                 <Grid item xs={4}>
-                    <div style={{backgroundColor: "#ffffff", height: "250px",
+                    <div style={{backgroundColor: "azure", borderRadius: "5px", height: "250px",
                         display: "flex", 
                         flexDirection: "row-reverse",
                         alignItems: "center",
-                        justifyContent: "space-around"
-                    }}>
+                        justifyContent: "space-around",
+                        boxShadow: "rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset"}}
+                    >
                         <Box component="img" sx={{height: '150px', maxWidth: '150px'}}
                             style={{objectFit: 'cover', filter: 'drop-shadow(0 0 0.1rem rgb(0, 0, 0))'}}
                             src={client2Image ? client2Image : defaultImage}

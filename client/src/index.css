@@ -9,13 +9,16 @@
     sans-serif;
 }
 
+body {
+  background-color: #d1f5ff;
+}
+
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
 
 .App {
-  background-color: darkgrey;
+  background-color: #d1f5ff;
   min-height: 100vh;
   max-height: 100vh;
   max-width: 80vw;

@@ -54,11 +54,15 @@ function ProfileForm() {
     
     return (
         <form onSubmit={handleSubmit}>
-            <FormControl sx={{ gap: 3 }} onSubmit={handleSubmit}>
+            <FormControl sx={{ gap: 3 }} style={{padding: "70px", backgroundColor: "azure", borderRadius: "10px", 
+            boxShadow: "rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset"
+            }} onSubmit={handleSubmit}
+            >
                 <Box 
                     component="img"
                     sx={{
                         height: '200px',
+                        minWidth: '200px',
                         maxWidth: '200px',
                         marginLeft: 'auto',
                         marginRight: 'auto'
@@ -66,12 +70,12 @@ function ProfileForm() {
                     style={{objectFit: 'cover', borderRadius: '5px', filter: 'drop-shadow(0 0 0.1rem rgb(0, 0, 0))'}}
                     src={selectedFile != null ? selectedFile : defaultImage}
                 />
-                <Button variant="contained" component="label" onChange={(e) => {fileSelectedHandler(e); fileNameSelectedHandler(e)}}>
+                <Button variant="contained" style={{backgroundColor: "#9c27b0"}} component="label" onChange={(e) => {fileSelectedHandler(e); fileNameSelectedHandler(e)}}>
                     Upload player image
                     <input type="file" hidden/>
                 </Button>
                 <TextField id="outlined-basic" label="Select a name" variant="standard" onChange={nameSelectedHandler} required/>
-                <Button variant="contained" color="primary" type="submit">Submit</Button>
+                <Button variant="contained" color="secondary" type="submit">Submit</Button>
             </FormControl>
         </form>
     );

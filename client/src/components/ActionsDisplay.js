@@ -38,12 +38,13 @@ function ActionsDisplay() {
     }
 
     return (
-        <div style={{backgroundColor: "#ffffff", height: "250px", maxWidth: "800px",
-                display: "flex",
-                flexDirection: "row",
-                justifyContent: "space-evenly",
-                alignItems: "center",
-                marginRight: "-360px", // to remove extra space from using "flex"
+        <div style={{backgroundColor: "azure", borderRadius: "5px", height: "250px", maxWidth: "800px",
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            alignItems: "center",
+            marginRight: "-360px", // to remove extra space from using "flex"
+            boxShadow: "rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset"
             }}
         >
             <div>

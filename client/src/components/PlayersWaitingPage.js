@@ -43,7 +43,7 @@ function PlayersWaitingPage() {
             <Grid item xs={3}>
                 <IconWithText text="Player 1" everyoneIsOnline={onlineStatus} />
             </Grid>
-            <Grid item xs={3} style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <Grid item xs={3} sx={{gap: 3}} style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <img src={LoadingImage} alt="Loading" style={{width: '100%', maxWidth: '200px', height: 'auto'}}/>
                 <p style={{width: '100%', textAlign: 'center'}}>
                     {!onlineStatus ? "Waiting for players to join.." : loadingMessage}

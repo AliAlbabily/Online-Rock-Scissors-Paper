@@ -15,6 +15,12 @@ function ProfileForm() {
         console.log(`You connected with id: ${socket.id}`)
     })
 
+    // handle server error
+    socket.on('connect_error', function(err) {
+        alert('Error connecting to server')
+        console.log(`connect_error due to ${err.message}`)
+    })
+
     const [selectedFile, setSelectedFile] = useState()
     const [selectedPlayerName, setSelectedPlayerName] = useState()
     const navigate = useNavigate()
@@ -74,7 +80,7 @@ function ProfileForm() {
                     Upload player image
                     <input type="file" hidden/>
                 </Button>
-                <TextField id="outlined-basic" label="Select a name" variant="standard" onChange={nameSelectedHandler} required/>
+                <TextField id="outlined-basic" inputProps={{maxLength: 8}} label="Select a name" variant="standard" onChange={nameSelectedHandler} required/>
                 <Button variant="contained" color="secondary" type="submit">Submit</Button>
             </FormControl>
         </form>

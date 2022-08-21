@@ -74,7 +74,7 @@ function ProfileForm() {
                     Upload player image
                     <input type="file" hidden/>
                 </Button>
-                <TextField id="outlined-basic" label="Select a name" variant="standard" onChange={nameSelectedHandler} required/>
+                <TextField id="outlined-basic" inputProps={{maxLength: 8}} label="Select a name" variant="standard" onChange={nameSelectedHandler} required/>
                 <Button variant="contained" color="secondary" type="submit">Submit</Button>
             </FormControl>
         </form>

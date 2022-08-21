@@ -15,6 +15,12 @@ function ProfileForm() {
         console.log(`You connected with id: ${socket.id}`)
     })
 
+    // handle server error
+    socket.on('connect_error', function(err) {
+        alert('Error connecting to server')
+        console.log(`connect_error due to ${err.message}`)
+    })
+
     const [selectedFile, setSelectedFile] = useState()
     const [selectedPlayerName, setSelectedPlayerName] = useState()
     const navigate = useNavigate()

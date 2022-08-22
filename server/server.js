@@ -25,7 +25,7 @@ const clientsInfo = {
 
 const io = require("socket.io")(3001, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: "https://alialbabily.github.io/Online-Rock-Scissors-Paper/",
         methods: ["GET", "POST"],
     }
 })

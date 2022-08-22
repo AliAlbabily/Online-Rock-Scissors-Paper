@@ -9,7 +9,7 @@ function App() {
   return (
     <div className="App">
       <SocketContext.Provider value={socket}> {/* for the use of exporting socket io to all components*/}
-        <Router>
+        <Router basename="/Online-Rock-Scissors-Paper">
           <Routes>
               <Route path="/" element={<ProfileForm />} />
               <Route path="/waitingroom" element={<PlayersWaitingPage />} />

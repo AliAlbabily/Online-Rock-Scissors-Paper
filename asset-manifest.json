@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Online-Rock-Scissors-Paper/static/css/main.f549eba8.css",
-    "main.js": "/Online-Rock-Scissors-Paper/static/js/main.220cdcc8.js",
+    "main.js": "/Online-Rock-Scissors-Paper/static/js/main.99a03511.js",
     "static/js/787.c4e7f8f9.chunk.js": "/Online-Rock-Scissors-Paper/static/js/787.c4e7f8f9.chunk.js",
     "static/media/loadingImage.gif": "/Online-Rock-Scissors-Paper/static/media/loadingImage.a1a996746e5e48352c81.gif",
     "static/media/magic.png": "/Online-Rock-Scissors-Paper/static/media/magic.2a19e8683fc1eee8c57c.png",
@@ -9,11 +9,11 @@
     "static/media/sword.png": "/Online-Rock-Scissors-Paper/static/media/sword.4f017b4aec1fa8024eb2.png",
     "index.html": "/Online-Rock-Scissors-Paper/index.html",
     "main.f549eba8.css.map": "/Online-Rock-Scissors-Paper/static/css/main.f549eba8.css.map",
-    "main.220cdcc8.js.map": "/Online-Rock-Scissors-Paper/static/js/main.220cdcc8.js.map",
+    "main.99a03511.js.map": "/Online-Rock-Scissors-Paper/static/js/main.99a03511.js.map",
     "787.c4e7f8f9.chunk.js.map": "/Online-Rock-Scissors-Paper/static/js/787.c4e7f8f9.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.f549eba8.css",
-    "static/js/main.220cdcc8.js"
+    "static/js/main.99a03511.js"
   ]
 }

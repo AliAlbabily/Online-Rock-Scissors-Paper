@@ -25,7 +25,7 @@ const clientsInfo = {
 
 const io = require("socket.io")(3001, {
     cors: {
-        origin: "https://alialbabily.github.io",
+        origin: ["https://alialbabily.github.io", "http://localhost:3000"], // listens to
         methods: ["GET", "POST"],
     }
 })

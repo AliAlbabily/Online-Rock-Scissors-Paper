@@ -25,7 +25,11 @@ const clientsInfo = {
 
 const io = require("socket.io")(3001, {
     cors: {
-        origin: ["https://alialbabily.github.io", "http://localhost:3000"], // listens to
+        origin: [ // listens to allowed origins
+            "https://alialbabily.github.io", 
+            "http://localhost:3000",
+            "https://alialbabily.github.io/Online-Rock-Scissors-Paper"
+        ],
         methods: ["GET", "POST"],
     }
 })

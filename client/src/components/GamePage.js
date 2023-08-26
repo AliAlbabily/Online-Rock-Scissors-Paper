@@ -21,6 +21,7 @@ function GamePage() {
     const [winnerName, setWinnerName] = useState("Player")
 
     useEffect(() => { // equivalent to componentDidMount
+        // FIXME: "socket.emit" gets called 2 times. make the "emit" return 1 response
         socket.emit('get-clients-info', clientsInfo => {
             setclient1Name(clientsInfo.client1.name)
             setclient2Name(clientsInfo.client2.name)
